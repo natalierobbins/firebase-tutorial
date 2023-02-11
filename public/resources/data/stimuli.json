@@ -1,0 +1,31 @@
+
+{
+    "trial_instructions": {
+        "instructions1": "<p class=\"text-center large\">Please follow these instructions</p>",
+        "instructions2": "<p class=\"text-center large\">Please follow more instructions</p>",
+        "stimulus": "<p class=\"text-center large\">Please follow these instructions for each stimulus</p>"
+    },
+    "columns": {
+        "list": 0,
+        "order": 1,
+        "text": 2,
+        "filename": 3
+    },
+    "stimuli": {
+        "L1": [
+            ["list_val", "order_val", "text_val", "filename_val"], 
+            ["list_val", "order_val", "text_val", "filename_val"],
+            ["etc", "etc", "etc", "etc"]
+        ],
+        "L2": [
+            ["list_val", "order_val", "text_val", "filename_val"], 
+            ["list_val", "order_val", "text_val", "filename_val"],
+            ["etc", "etc", "etc", "etc"]
+        ],
+        "L3": [
+            ["list_val", "order_val", "text_val", "filename_val"], 
+            ["list_val", "order_val", "text_val", "filename_val"],
+            ["etc", "etc", "etc", "etc"]
+        ]
+    }
+}

@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/natalierobbins/firebase-tutorial/issues"
   },
-  "homepage": "https://github.com/natalierobbins/firebase-tutorial#readme"
+  "homepage": "https://github.com/natalierobbins/firebase-tutorial#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "firebase": "^9.17.1",
+    "jquery": "^3.6.3",
+    "jspsych": "^7.3.1",
+    "underscore": "^1.13.6"
+  }
 }
