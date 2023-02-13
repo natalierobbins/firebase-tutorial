@@ -7,10 +7,11 @@
 // The contents of this file are passed to the params variable of the
 // Experiment object.
 
-import { ref } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js';
+import { uploadBytes } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js';
+import { set } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js';
 
 export class Experiment {
-    constructor(params, firebaseStorage) {
+    constructor(params, firebaseStorage, firebaseDatabase) {
 
         /* -------------------------------------------------------------------------- */
         /*                               EXPERIMENT DATA                              */
@@ -18,59 +19,74 @@ export class Experiment {
 
         // TODO: Add more participant parameters here if needed.
         this.participant = {
-            id: params.participantId
+            id: params.pID
         }
 
         // TODO: Add more experiment parameters here if needed.
         this.experimentData = {
-            id: params.experimentId,
-            storageLocation: ''
+            id: params.expID
         }
 
-        this.columns = params.stimuli.columns
+        this.columns = params.columns
 
         // Initialize the experiment timeline
         this.timeline = [];
-
-        this.jsPsych = initJsPsych({
-            show_progress_bar: true,
-            display_element: 'jspsych-target',
-            on_finish: this.onFinish
-        });
 
         /* -------------------------------------------------------------------------- */
         /*                                   GETTERS                                  */
         /* -------------------------------------------------------------------------- */
 
-        this.getParticipantId = function() { // Return current participant's ID
+        // Return current participant's ID
+        this.pID = () => { 
             return this.participant.id;
         }
-          this.getExperimentId = function() {  // Return experiment's ID
+        // Return experiment's ID
+        this.expID = () => {  
             return this.experimentData.id;
         }
-          this.getTimeline = function() {      // Return the timeline
-            return this.timeline;
-        }
-        this.getStorageRef = function() {
-            return this.experimentData.storageLocation;
-        }
-        this.setStorageRef = function(ref) {
-            this.experimentData.storageLocation = ref;
-        }
 
-        this.setStorageLocation = () => {
-            var filename = this.experimentData.id + '/' + this.experimentData.id + '_' + this.participant.id + '.csv';
-            this.setStorageRef(ref(firebaseStorage, filename));
-        }
-
-        this.add = (item) => {
+        var add = (item) => {
             this.timeline.push(item);
         }
 
-        var addProperties = (jsPsych) => {
+        this.addProperties = (jsPsych) => {
             jsPsych.data.addProperties({
-                participantId: this.participant.id
+                participantId: this.pID()
             });
+        }
+
+        var addParticipantToDatabase = () => {
+            // if you want to have a demo mode that you can reuse
+            if (this.pID() != 'demo') {
+                try {
+                    set(firebaseDatabase, {
+                        complete: 1,
+                        experiment: this.expID()
+                    });
+                    console.log('Added participant to database');
+                }
+                catch (err) {
+                    console.error(err);
+                }
+            }
+        }
+
+        var saveDataToStorage = (filedata) => {
+            if (this.pID() != 'demo') {
+                console.log('Saving progress...');
+                var file = new File([filedata], firebaseStorage._location.path, {type: 'text/csv'})
+                try {
+                    uploadBytes(firebaseStorage, file).then((snapshot) => {
+                        console.log('Upload .csv file');
+                    });
+                }
+                catch (err) {
+                    console.error(err)
+                }
+            }
+            else {
+                console.log('Demo complete!')
+            }
         }
 
         /* -------------------------------------------------------------------------- */
@@ -96,17 +112,17 @@ export class Experiment {
 
             var welcome = {
                 type: jsPsychHtmlKeyboardResponse,
-                stimulus: "<p>Welcome to the experiment. Press any key to begin.</p>"
+                stimulus: params.trial_instructions.instructions1
             };
 
             var instructions = {
                 type: jsPsychHtmlKeyboardResponse,
-                stimulus: "<p>Here are some instructions. Press any key to continue.</p>"
+                stimulus: params.trial_instructions.instructions2
             };
 
-            this.add(preload);
-            this.add(welcome);
-            this.add(instructions);
+            add(preload);
+            add(welcome);
+            add(instructions);
 
         };
 
@@ -120,7 +136,7 @@ export class Experiment {
         var initTrial = (stimulus) => {
             return {
                 type: jsPsychHtmlKeyboardResponse,
-                stimulus: "<p>Here is a stimulus. Press any key to continue.</p>"
+                stimulus: params.trial_instructions.stimulus
             }
         }
 
@@ -131,37 +147,43 @@ export class Experiment {
           */ 
         this.initTrials = (stimuli) => {
             for (let i = 0; i < stimuli.length; i++) {
-                var trial = initTrial(stimuli[i]);
-                this.add(trial);
+                var trial = initTrial(stimuli[i][this.columns.text] + i);
+                add(trial);
             } // for
         }
 
         /* ----------------------------- POST-EXPERIMENT ---------------------------- */
 
-        this.initPostExperiment = (jsPsych, timeline, storage, db) => {
+        this.initPostExperiment = (jsPsych, timeline) => {
             var thankYou = {
                 type: jsPsychHtmlKeyboardResponse,
-                stimulus:  "<p>Thank you! Your responses have been recorded.</p>",
+                stimulus:  params.trial_instructions.thanks,
                 on_start: function() {
-                    saveDataToStorage(jsPsych.data.get().csv(), storage, this.participantId)
-                    addParticipantToDatabase(this.participantId, this.experimentId, db);
+                    saveDataToStorage(jsPsych.data.get().csv())
+                    addParticipantToDatabase();
                 }
             }
 
-            this.add(thankYou);
+            add(thankYou);
             
         }
 
         this.init = () => {
-            this.setStorageLocation();
+
 
             this.initPreExperiment();
             this.initTrials(params.stimuli.L1);
 
-            addProperties(this.jsPsych);
-            this.initPostExperiment(this.jsPsych, this.timeline, )
+            var jsPsych = initJsPsych({
+                show_progress_bar: true,
+                display_element: 'jspsych-target',
+                on_finish: this.onFinish
+            });
 
-            this.jsPsych.run(this.timeline);
+            this.addProperties(jsPsych);
+            this.initPostExperiment(jsPsych, this.timeline)
+
+            jsPsych.run(this.timeline);
         }
     }
 }

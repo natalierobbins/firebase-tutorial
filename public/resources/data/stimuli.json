@@ -3,7 +3,8 @@
     "trial_instructions": {
         "instructions1": "<p class=\"text-center large\">Please follow these instructions</p>",
         "instructions2": "<p class=\"text-center large\">Please follow more instructions</p>",
-        "stimulus": "<p class=\"text-center large\">Please follow these instructions for each stimulus</p>"
+        "stimulus": "<p class=\"text-center large\">Please follow these instructions for each stimulus</p>",
+        "thanks": "<p>Thank you! Your responses have been recorded.</p>"
     },
     "columns": {
         "list": 0,
