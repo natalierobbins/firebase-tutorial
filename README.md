@@ -126,6 +126,9 @@ If you ever need to access your configuration information again, you can find it
 ### experiment.js
 ## jsPsych pointers
 ### Plugins
+## Qualtrics pointers
+### Block layout
+### Redirecting
 ## Troubleshooting
 Firebase won’t let me create a new project
 At the time this tutorial is being written, student email accounts at UofM do not have permission to create Firebase projects. The best solution will be to use a different email account that is not part of an organization.
