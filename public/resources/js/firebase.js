@@ -66,7 +66,7 @@ signInAnonymously(auth).then(() => {
             console.log('This participant has already completed the experiment! :(');
             showUserError('repeatUser');
         }
-        else if (!urlVars.pID || !urlVars.expID || !validateExpID(urlVars.expID)) {
+        else if (!validateExpID(urlVars.expID)) {
             console.log('Invalid experiment ID or paricipant ID');
             showUserError('invalidExpId');
         }
@@ -74,21 +74,17 @@ signInAnonymously(auth).then(() => {
             console.log('This participant has not yet completed the experiment. :)');
             loadStimuliAndRun('./resources/data/stimuli.json', urlVars)
         }
-    })
+    }).catch((err) => {
+        console.error(err);
+        showUserError('fbIssues');
+    });
     
 })
 
 var getParticipantCompletion = async (pID) => {
-    try {
-        var snapshot = await get(child(dbRef(database), `${pID}`))
-        console.log('Read successful')
-        return snapshot.val()
-    }
-    catch (err) {
-        console.error(err);
-    }
-
-
+    var snapshot = await get(child(dbRef(database), `${pID}`))
+    console.log('Read successful')
+    return snapshot.val()
 }
 
 var showUserError = (errorType) => {
@@ -108,23 +104,22 @@ var errorTextGenerator = (errorType, email) => {
     } else if (errorType == 'invalidExpId') {
         errorStr = '<p>We\'re having trouble loading your experiment. Please make sure that you have not altered the URL given to you in any way. Try loading again with your original link.</p><p>If you believe that this message is in error, '
     } else if (errorType == 'fbIssues') {
-        errorStr = '<p>We\'re having some trouble getting you connected. Please try loading this page again</p><p>If this issue persists, '
+        errorStr = '<p>We\'re having some trouble getting you connected. Please make sure that you have not altered the URL given to you in any way. Try loading again with your original link.</p><p>If this issue persists, '
     }
     return errorStr + contactStr
 }
 
-// in this example, valid experiment IDs would be any combination of "valid" or "perfect" with numbers 1-6, e.g. valid2 or perfect6
-// adjust this function as needed!
+// in this example, valid experiment IDs would be any combination of prefixes and numbers within the id range. I recommend you make the experiment IDs as simple as you can
 var validateExpID = (expID) => {
-    var prefixes = ['valid', 'perfect']
-    var idRange = [1, 6];
+    var prefixes = ['L', 'X']
+    var idRange = [1, 3];
     for (let i = 0; i < prefixes.length; i++) {
         for(let j = idRange[0]; j <= idRange[1]; j++) {
             if (expID == prefixes[i] + j) {
                 return true;
             }
-        }
-    }
+        } // for j
+    } // for i
     return false;
     
 }

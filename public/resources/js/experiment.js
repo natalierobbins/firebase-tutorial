@@ -45,45 +45,78 @@ export class Experiment {
             return this.experimentData.id;
         }
 
+        /* -------------------------------------------------------------------------- */
+        /*                                   SETTERS                                  */
+        /* -------------------------------------------------------------------------- */
+
+        // push jsPsych block to timeline
         var add = (item) => {
             this.timeline.push(item);
         }
 
+        // use this to add any retroactive properties to final data output
+        // for example, this setting will add a new "participantId" column 
+        // to the final .csv file with the correct ID
         this.addProperties = (jsPsych) => {
             jsPsych.data.addProperties({
                 participantId: this.pID()
             });
         }
 
+        /* -------------------------------------------------------------------------- */
+        /*                             FIREBASE FUNCTIONS                             */
+        /* -------------------------------------------------------------------------- */
+
+        /* addParticipantToDatabase()
+         * Checks if real participant or demo
+         *
+         * This format saves participants by ID, and under each participant ID
+         * are two attributes, "complete" and "experiment"
+         *
+         * Edit if you want a different format, and add any extra information you want
+         * about your participants in the second parameter of the set() function
+         */
         var addParticipantToDatabase = () => {
-            // if you want to have a demo mode that you can reuse
+            // check if demo
             if (this.pID() != 'demo') {
                 try {
+                    // set an instance of this participant with these values
                     set(firebaseDatabase, {
                         complete: 1,
                         experiment: this.expID()
                     });
                     console.log('Added participant to database');
                 }
+                // if issue with adding participant
                 catch (err) {
                     console.error(err);
                 }
             }
         }
 
+        /* saveDataToStorage()
+         *
+         * Initializes new File object with csv-formatted filedata and uploads it to firebase storage
+         *
+         * Does not save any data from demo trials :)
+         */
         var saveDataToStorage = (filedata) => {
+            // check if demo
             if (this.pID() != 'demo') {
                 console.log('Saving progress...');
+                // initialize new file -- if you need help with this (ex. need to change file format), lookup Javascript's File API
                 var file = new File([filedata], firebaseStorage._location.path, {type: 'text/csv'})
                 try {
                     uploadBytes(firebaseStorage, file).then((snapshot) => {
                         console.log('Upload .csv file');
                     });
                 }
+                // if issue with uploading csv file
                 catch (err) {
                     console.error(err)
                 }
             }
+            // demo complete, no need to upload file!
             else {
                 console.log('Demo complete!')
             }
@@ -103,23 +136,29 @@ export class Experiment {
 
         /* ----------------------------- PRE-EXPERIMENT ----------------------------- */
 
+        // Use this function to create any trials that should appear before the main
+        // experiment. For example:
         this.initPreExperiment = () => {
 
+            // preload plugin from jsPsych. useful especially for audio and image stimuli
             var preload = {
                 type: jsPsychPreload,
                 auto_preload: true
             };
-
+            
+            // welcome page
             var welcome = {
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus: params.trial_instructions.instructions1
             };
 
+            // instructions page
             var instructions = {
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus: params.trial_instructions.instructions2
             };
 
+            // push all blocks to timeline
             add(preload);
             add(welcome);
             add(instructions);
@@ -136,43 +175,57 @@ export class Experiment {
         var initTrial = (stimulus) => {
             return {
                 type: jsPsychHtmlKeyboardResponse,
-                stimulus: params.trial_instructions.stimulus
+                stimulus: `<p>${stimulus}</p>`
             }
         }
 
          /* initTrials()
           * Assuming that all of your stimuli are relatively uniform, you can init all
-          * of them with a for loop. If not, use this function to initialize your trials
+          * of them with one for loop. If not, use this function to initialize your trials
           * individually.
           */ 
         this.initTrials = (stimuli) => {
             for (let i = 0; i < stimuli.length; i++) {
                 var trial = initTrial(stimuli[i][this.columns.text] + i);
+                // push to timeline
                 add(trial);
-            } // for
+            } // for i
         }
 
         /* ----------------------------- POST-EXPERIMENT ---------------------------- */
 
-        this.initPostExperiment = (jsPsych, timeline) => {
+        /* initPostExperiment()
+         * 1. Converts data gathered by jsPsych into a csv-formatted string
+         * *  and saves it to storage using savaDataStorage() from experiment.js
+         * 2. Saves paricipant ID to database using addParticipantToDatabase()
+         * *  from experiment.js
+         * 3. Defines final message for user
+         * 4. Pushes entire block to experiment timeline
+         */
+        this.initPostExperiment = (jsPsych) => {
             var thankYou = {
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus:  params.trial_instructions.thanks,
+                // this function will run at beginning of this block to save participant
+                // and data to Firebase
                 on_start: function() {
                     saveDataToStorage(jsPsych.data.get().csv())
                     addParticipantToDatabase();
                 }
             }
-
+            // push to timeline
             add(thankYou);
             
         }
 
+        // init()
+        // putting it all together! this is the only function from the Experiment
+        // class that we actually call in firebase.js
         this.init = () => {
 
 
             this.initPreExperiment();
-            this.initTrials(params.stimuli.L1);
+            this.initTrials(params.stimuli[this.expID()]);
 
             var jsPsych = initJsPsych({
                 show_progress_bar: true,
@@ -181,7 +234,7 @@ export class Experiment {
             });
 
             this.addProperties(jsPsych);
-            this.initPostExperiment(jsPsych, this.timeline)
+            this.initPostExperiment(jsPsych)
 
             jsPsych.run(this.timeline);
         }
