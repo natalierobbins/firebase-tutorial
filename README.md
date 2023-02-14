@@ -31,7 +31,8 @@ This tutorial assumes that you have basic coding knowledge, are comfortable with
 ## Project set-up
 ### Setting up your project directory
 1. Download and install Node.js.
-2. Install ```firebase-tools``` using your terminal
+2. Clone or [download](https://github.com/natalierobbins/firebase-tutorial/archive/refs/heads/main.zip) this repository to use as a template.
+3. Install ```firebase-tools``` using your terminal.
 ```
 npm install -g firebase-tools
 ```
@@ -44,7 +45,7 @@ npm install -g firebase-tools
 ### Step 2: Link your local project to the console
 1. Navigate to your project in the command line using ```cd``` if not already there. For example:
 ```
-cd Users/user/path/to/your/experiment
+cd Users/natalierobbins/path/to/firebase-tutorial-main
 ```
 2. Initialize your Firebase project
 ```
