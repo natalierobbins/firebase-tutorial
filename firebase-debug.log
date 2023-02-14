@@ -1,0 +1,44 @@
+[debug] [2023-02-14T16:25:39.847Z] ----------------------------------------------------------------------
+[debug] [2023-02-14T16:25:39.849Z] Command:       /usr/local/bin/firebase /Users/natalierobbins/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase serve
+[debug] [2023-02-14T16:25:39.850Z] CLI Version:   11.4.0
+[debug] [2023-02-14T16:25:39.850Z] Platform:      darwin
+[debug] [2023-02-14T16:25:39.850Z] Node Version:  v16.16.0
+[debug] [2023-02-14T16:25:39.854Z] Time:          Tue Feb 14 2023 11:25:39 GMT-0500 (Eastern Standard Time)
+[debug] [2023-02-14T16:25:39.854Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-02-14T16:25:39.861Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-02-14T16:25:39.954Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-02-14T16:25:39.955Z] > authorizing via signed-in user (natalie.j.robbins@gmail.com)
+[debug] [2023-02-14T16:25:39.955Z] [iam] checking project tutorial-67fbc for permissions ["firebase.projects.get"]
+[debug] [2023-02-14T16:25:39.956Z] > refreshing access token with scopes: []
+[debug] [2023-02-14T16:25:39.958Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-02-14T16:25:39.958Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-02-14T16:25:40.103Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2023-02-14T16:25:40.106Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2023-02-14T16:25:40.198Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-02-14T16:25:40.199Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-02-14T16:25:40.244Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/tutorial-67fbc:testIamPermissions [none]
+[debug] [2023-02-14T16:25:40.244Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/tutorial-67fbc:testIamPermissions x-goog-quota-user=projects/tutorial-67fbc
+[debug] [2023-02-14T16:25:40.244Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/tutorial-67fbc:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2023-02-14T16:25:40.492Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/tutorial-67fbc:testIamPermissions 200
+[debug] [2023-02-14T16:25:40.494Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/tutorial-67fbc:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2023-02-14T16:25:40.495Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/tutorial-67fbc [none]
+[debug] [2023-02-14T16:25:44.195Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/tutorial-67fbc 200
+[debug] [2023-02-14T16:25:44.199Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/tutorial-67fbc {"projectId":"tutorial-67fbc","projectNumber":"56676404033","displayName":"tutorial","name":"projects/tutorial-67fbc","resources":{"hostingSite":"tutorial-67fbc","realtimeDatabaseInstance":"tutorial-67fbc-default-rtdb","storageBucket":"tutorial-67fbc.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_d2d53f15-5565-418d-b56b-865f893f42c8"}
+[info] 
+[info] === Serving from '/Users/natalierobbins/Desktop/firebase-tutorial'...
+[info] 
+[debug] [2023-02-14T16:25:44.205Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/tutorial-67fbc/sites 
+[debug] [2023-02-14T16:25:44.671Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/tutorial-67fbc/sites 200
+[debug] [2023-02-14T16:25:44.671Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/tutorial-67fbc/sites {"sites":[{"name":"projects/tutorial-67fbc/sites/tutorial-67fbc","defaultUrl":"https://tutorial-67fbc.web.app","appId":"1:56676404033:web:05c4a11c074b596cddafc0","type":"DEFAULT_SITE"}]}
+[debug] [2023-02-14T16:25:44.672Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/tutorial-67fbc/webApps/1:56676404033:web:05c4a11c074b596cddafc0/config [none]
+[debug] [2023-02-14T16:25:45.040Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/tutorial-67fbc/webApps/1:56676404033:web:05c4a11c074b596cddafc0/config 200
+[debug] [2023-02-14T16:25:45.040Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/tutorial-67fbc/webApps/1:56676404033:web:05c4a11c074b596cddafc0/config {"projectId":"tutorial-67fbc","appId":"1:56676404033:web:05c4a11c074b596cddafc0","databaseURL":"https://tutorial-67fbc-default-rtdb.firebaseio.com","storageBucket":"tutorial-67fbc.appspot.com","locationId":"us-central","apiKey":"AIzaSyAkVEXlr37hGFHRWPKowauPW96XvuJZndc","authDomain":"tutorial-67fbc.firebaseapp.com","messagingSenderId":"56676404033"}
+[warn] ⚠  hosting: Port 5000 is not available. Trying another port... {"metadata":{"emulator":{"name":"hosting"},"message":"\u001b[33mhosting: \u001b[39mPort 5000 is not available. Trying another port..."}}
+[info] i  hosting: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] ✔  hosting: Local server: http://localhost:5005 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5005\u001b[22m\u001b[24m"}}
+[info] i  hosting: 127.0.0.1 - - [14/Feb/2023:16:25:51 +0000] "GET / HTTP/1.1" 200 1581 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Feb/2023:16:25:51 +0000] \"GET / HTTP/1.1\" 200 1581 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Feb/2023:16:25:51 +0000] "GET /resources/js/firebase.js HTTP/1.1" 200 6784 "http://localhost:5005/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Feb/2023:16:25:51 +0000] \"GET /resources/js/firebase.js HTTP/1.1\" 200 6784 \"http://localhost:5005/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Feb/2023:16:25:51 +0000] "GET /resources/js/experiment.js HTTP/1.1" 200 9293 "http://localhost:5005/resources/js/firebase.js" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Feb/2023:16:25:51 +0000] \"GET /resources/js/experiment.js HTTP/1.1\" 200 9293 \"http://localhost:5005/resources/js/firebase.js\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Feb/2023:16:26:03 +0000] "GET /?participantId=demo&experimentId=L1 HTTP/1.1" 200 1581 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Feb/2023:16:26:03 +0000] \"GET /?participantId=demo&experimentId=L1 HTTP/1.1\" 200 1581 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Feb/2023:16:26:03 +0000] "GET /resources/data/stimuli.json HTTP/1.1" 200 1147 "http://localhost:5005/?participantId=demo&experimentId=L1" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Feb/2023:16:26:03 +0000] \"GET /resources/data/stimuli.json HTTP/1.1\" 200 1147 \"http://localhost:5005/?participantId=demo&experimentId=L1\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36\""}}

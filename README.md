@@ -51,7 +51,7 @@ firebase init
 6. Select the project you made in Step 1.
 7. Press enter to select the default options for any remaining questions. (Unless you know what you are doing and want to change them!)
 ## Project layout
-As of right now, your project directory should look like this:
+As of right now, your project directory should look something like this:
 ```
 firebase-project
 ├── database.rules.json
@@ -67,14 +67,14 @@ firebase-project
             ├── experiment.js
 ├── storage.rules
 ```
-We'll focus on the ```public``` folder first, since this is the only thing you should need to change.
+You should only need to change files inside the public folder -- the rules I have already defined for you outside of it should work. Anywhere that requires your attention in a template file will have a ```TODO``` comment by it.
 ### index.html
 The only thing you HAVE to change here is your experiment title. Feel free to add any additional ```.css``` files or ```.js``` files as needed.
 
-This is also home to all of your packages; they're imported using the ```<script></script>``` tags. While you shouldn't need any more Firebase modules, you will likely need to import jsPsych plugins. For the sake of any beginners following this tutorial, we will be using CDN-hosted scripts; feel free to overhaul this structure and download everything via ```npm``` if you know how to do that :)
+This is also home to all of your jQuery, Underscore, and jsPsych packages; they're imported using the ```<script></script>``` tags. You will likely need to import more jsPsych plugins. For the sake of any beginners following this tutorial, we will be using CDN-hosted scripts; feel free to overhaul this structure and download everything via ```npm``` if you know how to do that :)
 
-We'll worry about importing jsPsych plugins later!
-### /resources/data
+We'll worry about importing jsPsych plugins later in the tutorial!
+### data/
 This folder should hold any external files you might need to load into your experiment (audio, images, etc.). While you don't need to create a new subfolder to hold these files, it's nice to have them all in one place (so, for instance, you could create a ```/public/resources/data/images```). If your experiment soley consists of simple text stimuli, however, I would simply include the text in your stimuli.json file, which I discuss below.
 ### stimuli.json
 As of right now, your data stimuli.json is an example skeleton -- do what you will with the starter structure. This file should hold your experiment "outline" and any insertable data, such as written instructions; this will do wonders for your code readability and organization. Here is a (slightly modified) example from Matthew Kramer's tutorial that works very well.
@@ -126,6 +126,22 @@ If you ever need to access your configuration information again, you can find it
 ### experiment.js
 ## jsPsych pointers
 ### Plugins
+You will need to import separate plugins for each kind of stimuli type and response type you want for your experiment. You can find the full list of official plugins and their documentation [here](https://www.jspsych.org/7.2/plugins/list-of-plugins/).
+
+In each plugin page, you'll find the link for the CDN-hosted script. You'll need to import them into ```index.html```, and then define each jsPsych trial's ```type``` attribute accordingly. In general, what you add to your ```index.html``` will look like this:
+``` html
+<script src="https://unpkg.com/@jspsych/${PLUGIN_TITLE}@1.1.1"></script>
+```
+and defining your jsPsych trial will look something like this:
+``` javascript
+var trial = {
+    type: ${PLUGIN_TITLE},
+    stimulus: <...>,
+    <more options...>
+};
+```
+### Miscellaneous
+One thing you may find useful is to add more values to the final participant's data. For instance, you may want to add attributes about a given stimulus to your output. Or, if there are right or wrong answers, you could calculate 
 ## Qualtrics pointers
 ### Block layout
 ### Redirecting
