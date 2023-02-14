@@ -19,14 +19,15 @@ export class Experiment {
 
         // TODO: Add more participant parameters here if needed.
         this.participant = {
-            id: params.pID
+            id: params.pID // accessing participant ID from params
         }
 
         // TODO: Add more experiment parameters here if needed.
         this.experimentData = {
-            id: params.expID
+            id: params.expID // accessing experiment ID from params
         }
-
+         // Optional -- I store columns and their indices into my stimuli.json file for
+         // clearer, cleaner code. You can see me use this in the initTrials() function
         this.columns = params.columns
 
         // Initialize the experiment timeline
@@ -73,7 +74,7 @@ export class Experiment {
          * This format saves participants by ID, and under each participant ID
          * are two attributes, "complete" and "experiment"
          *
-         * Edit if you want a different format, and add any extra information you want
+         * TODO: Edit if you want a different format, and add any extra information you want
          * about your participants in the second parameter of the set() function
          */
         var addParticipantToDatabase = () => {
@@ -149,13 +150,21 @@ export class Experiment {
             // welcome page
             var welcome = {
                 type: jsPsychHtmlKeyboardResponse,
-                stimulus: params.trial_instructions.instructions1
+                stimulus: params.trial_instructions.instructions1,
+                // this on_finish function will replace the current stimulus, which is
+                // a long, ugly HTML string, with 'WELCOME_MESSAGE' on your final data output
+                on_finish: function(data) {
+                    data.stimulus = 'WELCOME_MESSAGE'
+                }
             };
 
             // instructions page
             var instructions = {
                 type: jsPsychHtmlKeyboardResponse,
-                stimulus: params.trial_instructions.instructions2
+                stimulus: params.trial_instructions.instructions2,
+                on_finish: function(data) {
+                    data.stimulus = 'INSTRUCTIONS_MESSAGE'
+                }
             };
 
             // push all blocks to timeline
@@ -175,7 +184,19 @@ export class Experiment {
         var initTrial = (stimulus) => {
             return {
                 type: jsPsychHtmlKeyboardResponse,
-                stimulus: `<p>${stimulus}</p>`
+                stimulus: `<p>${stimulus}</p>`,
+                // here is an example of an on_finish function that checks if a
+                // participant response is correct or not and creates a new 
+                // "correct" column in the CSV with boolean value accordingly
+                // TODO: change or remove as needed
+                on_finish: function(data) {
+                    if (data.response == 'correct answer') {
+                        data.correct = 1;
+                    }
+                    else {
+                        data.correct = 0;
+                    }
+                }
             }
         }
 
@@ -183,10 +204,13 @@ export class Experiment {
           * Assuming that all of your stimuli are relatively uniform, you can init all
           * of them with one for loop. If not, use this function to initialize your trials
           * individually.
+          * In this function, the <stimuli> variable should be one single list, with each
+          * item being a single stimulus (likely also a list)
+          * So, in the example below, we are accessing the stimuli list at i's text column
           */ 
         this.initTrials = (stimuli) => {
             for (let i = 0; i < stimuli.length; i++) {
-                var trial = initTrial(stimuli[i][this.columns.text] + i);
+                var trial = initTrial(stimuli[i][this.columns.text]);
                 // push to timeline
                 add(trial);
             } // for i
@@ -223,19 +247,26 @@ export class Experiment {
         // class that we actually call in firebase.js
         this.init = () => {
 
-
+            // push pre experiment
             this.initPreExperiment();
+            // push experiment trials -- in this case, expID is the same as the name of
+            // each list, so we can access our given stimuli list this way
             this.initTrials(params.stimuli[this.expID()]);
 
+            // initialize your jsPsych object
             var jsPsych = initJsPsych({
                 show_progress_bar: true,
                 display_element: 'jspsych-target',
                 on_finish: this.onFinish
             });
-
+            // adding properties, like participant ID
             this.addProperties(jsPsych);
+
+            // push post experiment; this needs to be done after creating our jsPsych object,
+            // since this function must take it in as an argument
             this.initPostExperiment(jsPsych)
 
+            // jsPsych object is ready; run it on the timeline we created
             jsPsych.run(this.timeline);
         }
     }

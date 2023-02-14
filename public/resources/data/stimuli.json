@@ -14,18 +14,18 @@
     },
     "stimuli": {
         "L1": [
-            ["list_val", "order_val", "text_val", "filename_val"], 
-            ["list_val", "order_val", "text_val", "filename_val"],
+            ["list_val", "order_val", "text_val1", "filename_val"], 
+            ["list_val", "order_val", "text_val2", "filename_val"],
             ["etc", "etc", "etc", "etc"]
         ],
         "L2": [
-            ["list_val", "order_val", "text_val", "filename_val"], 
-            ["list_val", "order_val", "text_val", "filename_val"],
+            ["list_val", "order_val", "text_val1", "filename_val"], 
+            ["list_val", "order_val", "text_val2", "filename_val"],
             ["etc", "etc", "etc", "etc"]
         ],
         "L3": [
-            ["list_val", "order_val", "text_val", "filename_val"], 
-            ["list_val", "order_val", "text_val", "filename_val"],
+            ["list_val", "order_val", "text_val1", "filename_val"], 
+            ["list_val", "order_val", "text_val2", "filename_val"],
             ["etc", "etc", "etc", "etc"]
         ]
     }
