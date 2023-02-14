@@ -128,11 +128,13 @@ const firebaseConfig = {
 ```
 If you ever need to access your configuration information again, you can find it under ```Project settings > General > Your apps```.
 ### experiment.js
-This is the file that you will need to make the most changes in -- namely defining the jsPsych trials that make up your experiment. In the template, you will find a very basic set up of text-prompt trials.
+This is the file that you will need to make the most changes in -- namely defining the jsPsych trials that make up your experiment. In the template, you will find a very basic set up of text-prompt trials that you will need to edit with your own structure. There are a ton of comments in the document to hopefully help you through the whole process!
+
+Check out the [jsPsych plugins](https://github.com/natalierobbins/firebase-tutorial#plugins) section below for additional guidance on constructing your trials.
 ## Testing and development
 Now that you know your project layout, you can start making changes for your experiment! In order to check what it looks like and run demos, use the ```firebase serve``` command in your terminal (make sure you are currently inside of your project directory when you do so). This will host your files on a local server.
 
-Once you feel happy with how your experiment looks and have made sure that it connects well with your Firebase console, you can deploy it with the ```firebase deploy``` command! This will upload all of your files to Firebase, and you will now have a hosting URL that you will give to your participants ([for instance, here is this tutorial!](https://tutorial-67fbc.web.app/?participantId=demo&experimentId=L1)). 
+Once you feel happy with how your experiment looks and have made sure that it connects well with your Firebase console, you can deploy it with the ```firebase deploy``` command! This will upload all of your files to Firebase, and you will now have a hosting URL that you will give to your participants ([for instance, here is this very tutorial!](https://tutorial-67fbc.web.app/?participantId=demo&experimentId=L1)). 
 
 Firebase has limited storage, so only make new deployments when you feel you have a final draft -- otherwise you'll have to go into your console to delete previous deployment stages to free up room.
 ## jsPsych pointers
@@ -167,8 +169,10 @@ ${e://Field/PROLIFIC_PID}
 This will extract the participant's ID from their redirection from Prolific.
 ### Redirecting
 In order to inject this ID back into your experiment link, your HTML text block should look as follows:
-```
-<a href="https://<YOUR_PROJECT_NAME>.web.app/?participantId=${q://QID<NUMBER>/ChoiceTextEntryValue}&amp;experimentId=<EXPERIMENT_ID>">Click this link to complete Part 1 of the study.&nbsp;</a>
+``` html
+<a href="https://<YOUR_PROJECT_NAME>.web.app/?participantId=${q://QID<NUMBER>/ChoiceTextEntryValue}&amp;experimentId=<EXPERIMENT_ID>">
+  Click this link to complete Part 1 of the study.&nbsp;
+</a>
 <div>&nbsp;</div>
 ```
 where ```<YOUR_PROJECT_NAME>``` corresponds to your hosting URL, ```<NUMBER>``` corresponds to the ID number of the Prolific ID text entry question you created above, and ```<EXPERIMENT_ID>``` corresponds to which experiment you want that specific link to go to.
