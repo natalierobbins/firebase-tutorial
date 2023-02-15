@@ -182,3 +182,4 @@ You can randomize your Qualtrics survey as normal, with each block having its ow
 ## Thank you!
 Thank you for using my tutorial! If you have any questions/issues, feel free to email me at [robbinat@umich.edu](mailto:robbinat@umich.edu)
 
+I will also be adding a section on downloading and aggregating participant output data, since as of right now Firebase gives no way for you to download all of your files at once. Stay tuned!
