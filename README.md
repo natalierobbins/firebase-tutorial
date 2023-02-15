@@ -19,6 +19,7 @@
 - [Qualtrics pointers](https://github.com/natalierobbins/firebase-tutorial#qualtrics-pointers)
     - [Collecting Prolific IDs](https://github.com/natalierobbins/firebase-tutorial#collecting-prolific-id)
     - [Redirecting](https://github.com/natalierobbins/firebase-tutorial#redirecting)
+- [Downloading participant output](https://github.com/natalierobbins/firebase-tutorial#downloading-participant-output)
 - [Thank you](https://github.com/natalierobbins/firebase-tutorial#thank-you)
 
 ## Introduction
@@ -179,7 +180,9 @@ In order to inject this ID back into your experiment link, your HTML text block 
 where ```<YOUR_PROJECT_NAME>``` corresponds to your hosting URL, ```<NUMBER>``` corresponds to the ID number of the Prolific ID text entry question you created above, and ```<EXPERIMENT_ID>``` corresponds to which experiment you want that specific link to go to.
 
 You can randomize your Qualtrics survey as normal, with each block having its own link to its own experiment version.
+## Downloading participant output
+Right now, I only have one script made for downloading any text-based files from Firebase Storage all at once. You can find it [here](https://github.com/natalierobbins/firebase-download).
+
+I may be adding more as time goes on, so stay tuned!
 ## Thank you!
 Thank you for using my tutorial! If you have any questions/issues, feel free to email me at [robbinat@umich.edu](mailto:robbinat@umich.edu)
-
-I will also be adding a section on downloading and aggregating participant output data, since as of right now Firebase gives no way for you to download all of your files at once. Stay tuned!
