@@ -18,13 +18,13 @@ import { Experiment } from './experiment.js';
 // your project settings
 // TODO: Fill in your own config
 const firebaseConfig = {
-  apiKey: "AIzaSyAkVEXlr37hGFHRWPKowauPW96XvuJZndc",
-  authDomain: "tutorial-67fbc.firebaseapp.com",
-  databaseURL: "https://tutorial-67fbc-default-rtdb.firebaseio.com",
-  projectId: "tutorial-67fbc",
-  storageBucket: "tutorial-67fbc.appspot.com",
-  messagingSenderId: "56676404033",
-  appId: "1:56676404033:web:05c4a11c074b596cddafc0"
+  apiKey: "XXXXXXXX",
+  authDomain: "XXXXXXXX",
+  databaseURL: "XXXXXXXX",
+  projectId: "XXXXXXXX",
+  storageBucket: "XXXXXXXX",
+  messagingSenderId: "XXXXXXXX",
+  appId: "XXXXXXXX"
 };
 
 /* ----------------------------- INITIALIZE APP ----------------------------- */
