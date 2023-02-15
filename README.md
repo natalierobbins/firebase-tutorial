@@ -133,7 +133,7 @@ This is the file that you will need to make the most changes in -- namely defini
 
 Check out the [jsPsych plugins](https://github.com/natalierobbins/firebase-tutorial#plugins) section below for additional guidance on constructing your trials.
 ## Testing and development
-Now that you know your project layout, you can start making changes for your experiment! In order to check what it looks like and run demos, use the ```firebase serve``` command in your terminal (make sure you are currently inside of your project directory when you do so). This will host your files on a local server.
+Now that you know your project layout, you can start making changes for your experiment! In order to check what it looks like and run demos, use the ```firebase serve``` command in your terminal (make sure you are currently inside of your project directory when you do so). This will host your files on a local server. (Note that you need to fill in experiment and participant ID URL variables for the experiment to load; otherwise, it will just show the error as if there's something wrong with the link)
 
 Once you feel happy with how your experiment looks and have made sure that it connects well with your Firebase console, you can deploy it with the ```firebase deploy``` command! This will upload all of your files to Firebase, and you will now have a hosting URL that you will give to your participants ([for instance, here is this very tutorial!](https://tutorial-67fbc.web.app/?participantId=demo&experimentId=L1)). 
 
