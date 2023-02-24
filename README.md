@@ -40,9 +40,28 @@ npm install -g firebase-tools
 ## Firebase console
 ### Step 1: Create new Firebase project
 1. Log into the [Firebase Console](https://console.firebase.google.com/u/0/) using your preferred Google account and create a new project.
-3. If you were not already prompted, set your cloud resource location. You can do this by filling in the value of ```Default GCP resource location``` under ```Project settings > General```. Make sure to choose the location closest to your actual location; once you set it, you cannot change it.
-2. Create a new ```Realtime Database```. The ```Realtime Database``` page is under the ```Build``` dropdown menu in the sidebar of your console. Start your database in test mode; we will edit the rules later.
-2. Set up your ```Storage```. The ```Storage``` page is under the ```Build``` dropdown menu in the sidebar of your console. Start your database in test mode; we will edit the rules later.
+2. Set up your ```Hosting```. The ```Hosting``` page is under the ```Build``` dropgown menu in the sidebar of your console. Click the ```Get started``` button and set the location closest to your actual location; once you set it, you cannot change it. Don't worry about running any of the ```firebase login``` or ```firebase init``` commands quite yet, or about copying the SDK. We will do this later.
+3. Create a new ```Realtime Database```. The ```Realtime Database``` page is under the ```Build``` dropdown menu in the sidebar of your console. Click the ```Get started``` button. It doesn't matter what rules you start your database in -- once you have set it up, overwrite them with the following rule set. You'll find them in the ```Rules``` tab of the ```Realtime Database```.
+``` json
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+```
+4. Set up your ```Storage```. The ```Storage``` page is under the ```Build``` dropdown menu in the sidebar of your console. Click the ```Get started``` button. Similar to above, start your Storage with any rules, and overwrite them with the following rules once your storage has finished initializing.
+``` javascript
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+5. Set up your ```Authentication```. The ```Authentication``` page is under the ```Build``` dropdown menu. Click the ```Get started``` button. Under the ```Sign-in method``` tab, select ```Anonymous``` under the ```Native Providers``` section. Enable it and save.
 ### Step 2: Link your local project to the console
 1. Navigate to your project in the command line using ```cd``` if not already there. For example:
 ```
