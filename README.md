@@ -182,7 +182,7 @@ So, as you fill out your ```stimuli.json```, one row in your table is equivalent
 
 If you decide to split your stimuli into different categories (in this case, by "List"), each category must be a list element OF list elements: 
 ``` json
-[
+"List1": [
     ["List1", "1", "FILLER_GOOD_1", "FILLER_GOOD", "N/A", "N/A", "FILLER_GOOD_1.wav"], 
     ["List1", "2", "FILLER_BAD_1", "FILLER_BAD", "N/A", "N/A", "FILLER_BAD_1.wav"], 
     ...
