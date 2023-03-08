@@ -27,13 +27,44 @@ Welcome to the Firebase tutorial for the [Contact, Cognition, & Change Lab](http
 
 While you may run into errors with some of the outdated segments on Matthew’s original template, their tutorial is still very useful, and even includes a section on pupillometry!
 ### Getting started
-This tutorial assumes that you have basic coding knowledge, are comfortable with using code editors and command line interfaces, and have [npm](https://www.npmjs.com/) installed on your computer. If you need help with setting up a code editor or command line tools, the [EECS 280 website](https://eecs280staff.github.io/tutorials/) has a tutorial available for most operating systems.
+This tutorial assumes that you have basic coding knowledge. My recommendation for a code editor that works across platforms, if you do not have one, is [VSCode](https://code.visualstudio.com/download). For command line operations, you need to use your terminal. The native Apple terminal, which you can launch by searching and selecting "terminal" in your search bar, is sufficient. If you have a windows machine, I recommend downloading and using [Ubuntu](https://apps.microsoft.com/store/detail/ubuntu-on-windows/9NBLGGH4MSV6?hl=en-us&gl=us&rtc=1).
 
+If you need help with setting up a code editor or command line tools, the [EECS 280 website](https://eecs280staff.github.io/tutorials/) has a tutorial available for most operating systems. 
 ## Project set-up
+### Installing npm
+1. Launch your terminal.
+2. In order to install npm, you first have to install nvm. If you have an Apple or Windows machine, paste the following command into your terminal and hit enter.
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+```
+If you have Linux machine, use this command instead:
+```
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+```
+3. Export nvm by pasting this command into your terminal and hitting enter.
+```
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+```
+4. To verify that everything has downloaded correctly, paste and run this command:
+```
+nvm --version
+```
+If your terminal prints out a string of numbers (ex. 0.39.1), you have installed nvm successfully!
+
+5. Install npm with the following command:
+```
+nvm install node
+```
+6. Verify everything with the --version command, like above!
+```
+node --version
+npm --version
+```
+If you get a string of numbers again, you have installed node/npm successfully!
 ### Setting up your project directory
-1. Download and install Node.js.
-2. Clone or [download](https://github.com/natalierobbins/firebase-tutorial/archive/refs/heads/main.zip) this repository to use as a template.
-3. Install ```firebase-tools``` using your terminal.
+1. Clone or [download](https://github.com/natalierobbins/firebase-tutorial/archive/refs/heads/main.zip) this repository to use as a template.
+2. Install ```firebase-tools``` using your terminal with the following command:
 ```
 npm install -g firebase-tools
 ```
@@ -41,7 +72,7 @@ npm install -g firebase-tools
 ### Step 1: Create new Firebase project
 1. Log into the [Firebase Console](https://console.firebase.google.com/u/0/) using your preferred Google account and create a new project.
 2. Set up your ```Hosting```. The ```Hosting``` page is under the ```Build``` dropgown menu in the sidebar of your console. Click the ```Get started``` button and set the location closest to your actual location; once you set it, you cannot change it. Don't worry about running any of the ```firebase login``` or ```firebase init``` commands quite yet, or about copying the SDK. We will do this later.
-3. Create a new ```Realtime Database```. The ```Realtime Database``` page is under the ```Build``` dropdown menu in the sidebar of your console. Click the ```Get started``` button. It doesn't matter what rules you start your database in -- once you have set it up, overwrite them with the following rule set. You'll find them in the ```Rules``` tab of the ```Realtime Database```.
+3. Create a new ```Realtime Database```. The ```Realtime Database``` page is under the ```Build``` dropdown menu in the sidebar of your console. Click the ```Get started``` button. It doesn't matter what rules you start your database in -- once you have set it up, overwrite them with the following rule set. You'll find them in the ```Rules``` tab of the ```Realtime Database```. Make sure to replace the current ```Rules``` and click ```Publish``` to finalize them.
 ``` json
 {
   "rules": {
@@ -50,7 +81,7 @@ npm install -g firebase-tools
   }
 }
 ```
-4. Set up your ```Storage```. The ```Storage``` page is under the ```Build``` dropdown menu in the sidebar of your console. Click the ```Get started``` button. Similar to above, start your Storage with any rules, and overwrite them with the following rules once your storage has finished initializing.
+4. Set up your ```Storage```. The ```Storage``` page is under the ```Build``` dropdown menu in the sidebar of your console. Click the ```Get started``` button. Similar to above, start your Storage with any rules, and overwrite them with the following rules once your storage has finished initializing. Make sure to replace the current ```Rules``` and click ```Publish``` to finalize them.
 ``` javascript
 rules_version = '2';
 service firebase.storage {
@@ -63,15 +94,25 @@ service firebase.storage {
 ```
 5. Set up your ```Authentication```. The ```Authentication``` page is under the ```Build``` dropdown menu. Click the ```Get started``` button. Under the ```Sign-in method``` tab, select ```Anonymous``` under the ```Native Providers``` section. Enable it and save.
 ### Step 2: Link your local project to the console
-1. Navigate to your project in the command line using ```cd``` if not already there. For example:
+1. Navigate to your project in the command line using ```cd``` if not already there (cd is short for "change directory"). You can do this folder by folder if you'd like. For instance, if I put my project folder on my desktop, I could navigate there by running the following commands, one after the other:
 ```
-cd Users/natalierobbins/path/to/firebase-tutorial-main
+cd Desktop
+cd project
 ```
-2. Initialize your Firebase project
+If you ever get lost, you can get a list of all the files in the folder you're currently in by running the command ```ls```. If you ever accidentally ```cd``` into the wrong folder, you can go back to the previous folder by running ``` cd ..```.
+You can also combine the commands into one line by separating each folder name from its child folder with a forward slash, as seen below:
+```
+cd Desktop/project
+```
+2. Log in to Firebase from your terminal. Running the following command will redirect you to your browser and will guide you through logging in to your google account.
+```
+firebase login
+```
+3. Initialize your Firebase project.
 ```
 firebase init
 ```
-3. You’ll be asked a series of configuration questions; when prompted, ```Which Firebase CLI features do you want to set up for this folder?```, make sure to select ``` Realtime Database ```, ``` Hosting: ..... ```, and``` Storage ```
+4. You’ll be asked a series of configuration questions; when prompted, ```Which Firebase CLI features do you want to set up for this folder?```, make sure to select ``` Realtime Database ```, ``` Hosting: ..... ```, and``` Storage ```
 5. You will be prompted to choose an existing project or create a new one. Select ```Use an existing project```. At this point, you may be asked to log into Firebase if you haven't already.
 6. Select the project you made in Step 1.
 7. Press enter to select the default options for any remaining questions. (Unless you know what you are doing and want to change them!)
@@ -125,10 +166,36 @@ As of right now, your data stimuli.json is an example skeleton -- do what you wi
 Notice that they have split the JSON object into two categories, ```"stimuli"``` and ```"trial_instructions"```, but you can use more or less as needed.
 
 Additionally, look at how the ```"stimuli"``` object is structured -- in this experiment, there are multiple experiment verisons that hold a list of stimuli (```"l1"```, ```"l2"```, etc). Each stimulus in any given version is a list of values. In Matthew's example, each stimulus has the following attributes: ```list```, ```position```, ```id```, ```condition```, ```verb_type```, ```adjunct_type```, and ```audio_name```.
+### Understanding the stimuli.json file
+One way to think about making your ```stimuli.json``` file is to remember that it's essentially displaying your stimuli spreadsheet in a different format. So, focusing on the ```"stimuli"``` section in the code block above, you could imagine ```"l1"``` and ```"l2"``` as representing rows in the table below, separated by the ```List``` value:
 
-You can have as many or as few attributes as you like, just make sure you stay consistent with the order of attributes in each given stimuli. (Work like this can be tedious -- I usually run a python script to generate the ```"stimuli"``` section from a spreadsheet for me).
+List | Position | ID | Condition | Verb Type | Adjunct Type | Audio Name
+--- | --- | --- | --- | --- | --- | --- |
+List1 | 1 | FILLER_GOOD_1 | FILLER_GOOD | N/A | N/A | FILLER_GOOD_1.wav
+List1 | ... | ... | ... | ... | ... | ...
+List1 | ... | ... | ... | ... | ... | ...
+List2 | 1 | FILLER_GOOD_1 | FILLER_GOOD | N/A | N/A | FILLER_GOOD_1.wav
+List2 | ... | ... | ... | ... | ... | ...
+List2 | ... | ... | ... | ... | ... | ...
 
-So now, instead of inundating your code with the experiment order and file names for all of your stimuli and experiment versions, you can just reference this ```.json``` file! We will use it in our ```experiment.js``` file (more on that later). If you're not familiar with JSON, no worries! Here's some information about basic syntax you can look at if you feel lost.
+So, as you fill out your ```stimuli.json```, one row in your table is equivalent to one JS list element (denoted by the square brackets ```[]```). More concretely, the first row in this table as a list element is: ```["List1", "1", "FILLER_GOOD_1", "FILLER_GOOD", "N/A", "N/A", "FILLER_GOOD_1.wav"]```. 
+
+If you decide to split your stimuli into different categories (in this case, by "List"), each category must be a list element OF list elements: 
+``` json
+[
+    ["List1", "1", "FILLER_GOOD_1", "FILLER_GOOD", "N/A", "N/A", "FILLER_GOOD_1.wav"], 
+    ["List1", "2", "FILLER_BAD_1", "FILLER_BAD", "N/A", "N/A", "FILLER_BAD_1.wav"], 
+    ...
+]
+```
+Extending the spreadsheet format to the ```"trial_instructions"``` section, that table would look like this:
+Type | Message
+--- | ---
+instructions1 | ```<p class=\"text-center large\">Please follow these instructions</p>```
+instructions2 | ```<p class=\"text-center large\">Please follow more instructions</p>```
+stimulis | ```<p class=\"text-center large\">Please follow these instructions for each stimulus</p>```
+
+So now, instead of inundating your code with the experiment order and file names for all of your stimuli and experiment versions, you can just reference this ```.json``` file! We will use it in our ```experiment.js``` file (more on that later). If you're not familiar with JSON, no worries! [Here's some information about basic syntax you can look at if you feel lost](https://www.w3schools.com/js/js_json_syntax.asp).
 ### firebase.js
 This file is important because it links your local project to your remote Firebase console! To do so, you need to set up your web app on the console and add the correct configuration information to your ```firebase.js``` file.
 
