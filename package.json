@@ -1,0 +1,22 @@
+{
+  "name": "firebase-tutorial",
+  "version": "1.0.0",
+  "description": "- [Introduction](https://github.com/natalierobbins/firebase-tutorial#introduction)     - [Getting started](https://github.com/natalierobbins/firebase-tutorial#getting-started) - [Project set-up](https://github.com/natalierobbins/firebase-tutorial#project-set-up)     - [Setting up your project directory](https://github.com/natalierobbins/firebase-tutorial#setting-up-your-project-directory) - [Firebase console](https://github.com/natalierobbins/firebase-tutorial#firebase-console)     - [Create new Firebase project](https://github.com/natalierobbins/firebase-tutorial#step-1-create-new-firebase-project)     - [Link your local project to the console](https://github.com/natalierobbins/firebase-tutorial#step-2-link-your-local-project-to-the-console) - [Project layout](https://github.com/natalierobbins/firebase-tutorial#project-layout)     - [index.html](https://github.com/natalierobbins/firebase-tutorial#indexhtml)     - [data](https://github.com/natalierobbins/firebase-tutorial#data)     - [stimuli.json](https://github.com/natalierobbins/firebase-tutorial#stimulijson)     - [firebase.js](https://github.com/natalierobbins/firebase-tutorial#firebasejs)     - [experiment.js](https://github.com/natalierobbins/firebase-tutorial#experimentjs) - [jsPsych pointers](https://github.com/natalierobbins/firebase-tutorial#jspysch-pointers)     - [Plugins](https://github.com/natalierobbins/firebase-tutorial#plugins)     - [Editing jsPsych data](https://github.com/natalierobbins/firebase-tutorial#editing-post-trial-and-post-experiment-values) - [Qualtrics pointers](https://github.com/natalierobbins/firebase-tutorial#qualtrics-pointers)     - [Collecting Prolific IDs](https://github.com/natalierobbins/firebase-tutorial#collecting-prolific-id)     - [Redirecting](https://github.com/natalierobbins/firebase-tutorial#redirecting) - [Downloading participant output](https://github.com/natalierobbins/firebase-tutorial#downloading-participant-output) - [Thank you](https://github.com/natalierobbins/firebase-tutorial#thank-you)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natalierobbins/firebase-tutorial.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natalierobbins/firebase-tutorial/issues"
+  },
+  "homepage": "https://github.com/natalierobbins/firebase-tutorial#readme",
+  "dependencies": {
+    "firebase-admin": "^11.5.0"
+  }
+}

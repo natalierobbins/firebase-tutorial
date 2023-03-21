@@ -149,8 +149,9 @@ export class Experiment {
             
             // welcome page
             var welcome = {
-                type: jsPsychHtmlKeyboardResponse,
+                type: jsPsychHtmlButtonResponse,
                 stimulus: params.trial_instructions.instructions1,
+                choices: ['Continue'],
                 // this on_finish function will replace the current stimulus, which is
                 // a long, ugly HTML string, with 'WELCOME_MESSAGE' on your final data output
                 on_finish: function(data) {
@@ -160,8 +161,9 @@ export class Experiment {
 
             // instructions page
             var instructions = {
-                type: jsPsychHtmlKeyboardResponse,
+                type: jsPsychHtmlButtonResponse,
                 stimulus: params.trial_instructions.instructions2,
+                choices: ['Continue'],
                 on_finish: function(data) {
                     data.stimulus = 'INSTRUCTIONS_MESSAGE'
                 }

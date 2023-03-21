@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+      <!-- This title will be displayed on the window tab, so make sure to change this -->
+
+        <title>Tools</title>
+        <link rel="stylesheet" href="/resources/css/download.css">
+
+      <!-- General settings - no need to change any of this -->
+
+        <meta charset="utf-8">
+        <link rel="icon" type="image/x-icon" href="https://brand.umich.edu/assets/brand/style-guide/logo-guidelines/U-M_Logo-Hex.png">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- General dependencies: Jquery, Underscore - add or remove as needed -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
+
+      <!-- jsPsych import: overall package and stylesheet - no need to change any of this -->
+
+        <script src="https://unpkg.com/jspsych@7.3.1"></script>
+        <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+
+      <!-- jsPsych plugins -- TODO: ADD TO AS NEEDED -->
+
+        <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+    </head>
+
+    <!-- No need to change anything below this point ! -->
+    
+    <body>
+      <div id="instructions">
+        <h1>Download all files from Firebase Storage</h1>
+        <p>Copy and paste your Firebase configuration below. To get your configuration:</p>
+        <p class="ls">1. Open your <a target="_blank" href="https://console.firebase.google.com/u/0/">Firebase Console</a></p>
+        <p class="ls">2. Open the project you'd like to download from</p>
+        <p class="ls">3. Open your project settings and navigate to the "Your apps" section (under the "General" tab)</p>
+        <p class="ls">4. Under "SDK setup and configuration", select "Config"</p>
+        <p class="ls">5. Copy and paste the resulting code block in its entirety in the text box below</p>
+        <textarea id="config"></textarea>
+        <button id="configSubmit">Download all</button>
+      </div>
+        <h1 id="message"></h1>
+    </body>
+    <script type="module" src="/resources/js/download.js"></script>
+</html>

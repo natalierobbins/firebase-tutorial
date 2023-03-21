@@ -17,23 +17,27 @@ import { Experiment } from './experiment.js';
 // Firebase configuration for your web app; you can access this information in
 // your project settings
 // TODO: Fill in your own config
-const firebaseConfig = {
-  apiKey: "XXXXXXXX",
-  authDomain: "XXXXXXXX",
-  databaseURL: "XXXXXXXX",
-  projectId: "XXXXXXXX",
-  storageBucket: "XXXXXXXX",
-  messagingSenderId: "XXXXXXXX",
-  appId: "XXXXXXXX"
-};
 
-/* ----------------------------- INITIALIZE APP ----------------------------- */
+async function getStimuli() {
+    console.log('hello')
+    var stimuli = {};
+    const res = await fetch('../resources/data/stimuli.json')
+    stimuli = await res.json();
+    return stimuli;
+}
 
-// initialize Firebase app
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const storage  = getStorage(app);
-const database = getDatabase(app);
+getStimuli()
+    .then(stimuli => {
+
+    const firebaseConfig = stimuli.firebaseConfig
+
+    /* ----------------------------- INITIALIZE APP ----------------------------- */
+
+    // initialize Firebase app
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const storage  = getStorage(app);
+    const database = getDatabase(app);
 
 /* -------------------------------------------------------------------------- */
 /*                           RUNNING THE EXPERIMENT                           */
@@ -51,40 +55,41 @@ const database = getDatabase(app);
  * 
  * TODO: Modify urlVars object, validation structure if needed
  */
-signInAnonymously(auth).then(() => { // authenticate user
+    signInAnonymously(auth).then(() => { // authenticate user
 
-    console.log('Authenticated!')
+        console.log('Authenticated!')
 
-    // get variables
-    // TODO: change/add/delete URL variables as needed
-    var urlVars = {
-        pID: turkGetParam('participantId'), 
-        expID: turkGetParam('experimentId')
-    };
+        // get variables
+        // TODO: change/add/delete URL variables as needed
+        var urlVars = {
+            pID: turkGetParam('participantId'), 
+            expID: turkGetParam('experimentId')
+        };
 
-    getParticipantCompletion(urlVars.pID).then((val) => {
-        // if there is data, and if that data shows participant has already completed
-        // any version of the experiment
-        if (val && val.complete == 1) {
-            console.log('This participant has already completed the experiment! :(');
-            showUserError('repeatUser');
-        }
-        // or if there is no experiment id matching url variable
-        else if (!validateExpID(urlVars.expID)) {
-            console.log('Invalid experiment ID or paricipant ID');
-            showUserError('invalidExpId');
-        }
-        // green light
-        else {
-            console.log('This participant has not yet completed the experiment. :)');
-            loadStimuliAndRun('./resources/data/stimuli.json', urlVars)
-        }
-    }).catch((err) => {
-        // unable to access database to check participant status
-        console.error(err);
-        showUserError('fbIssues');
-    });
-    
+        getParticipantCompletion(urlVars.pID, storage).then((val) => {
+            // if there is data, and if that data shows participant has already completed
+            // any version of the experiment
+            if (val && val.complete == 1) {
+                console.log('This participant has already completed the experiment! :(');
+                showUserError('repeatUser');
+            }
+            // or if there is no experiment id matching url variable
+            else if (!validateExpID(urlVars.expID)) {
+                console.log('Invalid experiment ID or paricipant ID');
+                showUserError('invalidExpId');
+            }
+            // green light
+            else {
+                console.log('This participant has not yet completed the experiment. :)');
+                loadStimuliAndRun('./resources/data/stimuli.json', urlVars, storage, database)
+            }
+        }).catch((err) => {
+            // unable to access database to check participant status
+            console.error(err);
+            showUserError('fbIssues');
+        });
+        
+    })
 })
 
 /* -------------------------------------------------------------------------- */
@@ -110,7 +115,7 @@ const turkGetParam = (name) => {
 
 // getParicipantCompletion()
 // returns value at participant in database
-var getParticipantCompletion = async (pID) => {
+var getParticipantCompletion = async (pID, database) => {
     var snapshot = await get(child(dbRef(database), `${pID}`))
     console.log('Read successful')
     return snapshot.val()
@@ -147,7 +152,7 @@ var validateExpID = (expID) => {
  * *  that we will write our data into!)
  * 2. Creates new Experiment object and runs it with init()
  */
-var loadStimuliAndRun = (file, urlVars) => {
+var loadStimuliAndRun = (file, urlVars, storage, database) => {
 
     $.getJSON(file, function(json) {
         // file named such that {expID}_{pID}.csv will be in folder {expID}

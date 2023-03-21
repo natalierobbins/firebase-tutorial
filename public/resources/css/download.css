@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    overflow: auto;
+    padding-top: 20px;
+    font-family: Helvetica, sans-serif;
+}
+
+.ls {
+    margin-left: 20px;
+}
+
+#instructions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+p {
+    margin: 0px;
+    width: 75%;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+textarea {
+    width: 400px;
+    height: 200px;
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+    <head>
+      <!-- This title will be displayed on the window tab, so make sure to change this -->
+
+        <title>Tools</title>
+        <link rel="stylesheet" href="/resources/css/tools.css">
+
+      <!-- General settings - no need to change any of this -->
+
+        <meta charset="utf-8">
+        <link rel="icon" type="image/x-icon" href="https://brand.umich.edu/assets/brand/style-guide/logo-guidelines/U-M_Logo-Hex.png">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- General dependencies: Jquery, Underscore - add or remove as needed -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
+
+      <!-- jsPsych import: overall package and stylesheet - no need to change any of this -->
+
+        <script src="https://unpkg.com/jspsych@7.3.1"></script>
+        <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+
+      <!-- jsPsych plugins -- TODO: ADD TO AS NEEDED -->
+
+        <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.2"></script>
+
+    </head>
+
+    <!-- No need to change anything below this point ! -->
+    
+    <body>
+        <form id="jsonForm">
+            <div class="inputWrapper">
+                <label for="stimuli">Upload .csv file</label>
+                <input 
+                    type="file"
+                    id="stimuli"
+                    name="stimuli"
+                    accept=".csv"
+                >
+                </input>
+                <input 
+                    type="hidden"
+                    id="cols"
+                    name="cols"
+                >
+                </input>
+            </div>
+            <div class="inputWrapper">
+                <label for="column">Select column to separate by (List, Version, etc)</label>
+                <select id="column" name="column">
+                </select>
+            </div>
+            <div class="inputWrapper">
+                <label for="sort">Select column to sort by (Order, Position, etc)</label>
+                <select id="sort" name="sort">
+                </select>
+            </div>
+            <div class="inputWrapper">
+                <label for="stimtype">Select stimulus type</label>
+                <select id="stimtype" name="stimtype">
+                    <option value="text">Text</option>
+                    <option value="audio file">Audio</option>
+                    <option value="image file">Image</option>
+                </select>
+            </div>
+            <div class="inputWrapper">
+                <label for="filenames">Select column containing text stimuli</label>
+                <select id="filenames" name="filenames">
+                    <option value="__NONE">Not applicable</option>
+                </select>
+            </div>
+            <div class="inputWrapper">
+                <label for="stimuli">Project ID</label>
+                <input 
+                    type="text"
+                    id="pid"
+                    name="pid"
+                >
+                </input>
+            </div>
+            <div class="inputWrapper">
+                <label for="stimuli">Project number</label>
+                <input 
+                    type="text"
+                    id="pnum"
+                    name="pnum"
+                >
+                </input>
+            </div>
+            <div class="inputWrapper">
+                <label for="stimuli">Web API Key</label>
+                <input 
+                    type="text"
+                    id="apikey"
+                    name="apikey"
+                >
+                </input>
+            </div>
+            <div class="inputWrapper">
+                <label for="stimuli">App ID</label>
+                <input 
+                    type="text"
+                    id="appid"
+                    name="appid"
+                >
+                </input>
+            </div>
+            <div style="display: flex; width: 100%; justify-content: center; gap: 10px;">
+                <button class="submitButton">Generate stimuli.json</button>
+            </div>
+        </form>
+        <a id="downloadLink" href="" download="stimuli.json" download><button>Download stimuli.json</button></a>
+    </body>
+    <script src="/resources/js/tools.js"></script>
+</html>
